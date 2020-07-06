@@ -1,0 +1,1 @@
+function initModel(){var a="/S4HC/sap/opu/odata/sap/YY1_BULK_UPDATE_214_CDS/";var e=new sap.ui.model.odata.ODataModel(a,true);sap.ui.getCore().setModel(e)}
