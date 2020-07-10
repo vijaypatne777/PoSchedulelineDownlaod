@@ -1,0 +1,137 @@
+<mvc:View controllerName="YY1_PO_DATE_214.YY1_PO_DATE_214.controller.View1" xmlns:table="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified"
+	xmlns:m="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" xmlns:fo="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" displayBlock=" true">
+     <m:App id="app">
+<!--<mvc:View controllerName="YY1_PO_DATE_214.YY1_PO_DATE_214.controller.View1" xmlns:table="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" -->
+<!--	xmlns:u="sap.ui.unified" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:vm="sap.ui.comp.variants" -->
+<!--	xmlns:fo="sap.ui.layout.form" xmlns:l="sap.ui.layout" displayBlock="true" >-->
+<!--		<m:App id="app">-->
+			<m:pages>
+				<m:Page id="page" title="{i18n>title}">
+					<m:content>
+						<fb:FilterBar id="filterbar" search="onSearch" clear="onClear" showClearButton="true">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="Purchasing Org." partOfCurrentVariant="true" mandatory="true" visibleInFilterBar="true">
+								<fb:control>
+									<m:Input type="Text" id="idPurOrg"/>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Plant" partOfCurrentVariant="true" mandatory="true" visibleInFilterBar="true">
+								<fb:control>
+									<m:Input type="Text" id="idPlant"/>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="__$INTERNAL$" name="C" label="Supplier" partOfCurrentVariant="true" mandatory="true" visibleInFilterBar="true">
+								<fb:control>
+									<m:Input type="Text" id="idSuppl"/>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+						</fb:FilterBar>
+						<m:FlexBox height="40px" alignItems="End" justifyContent="End">
+							<m:items>
+								<!--<l:HorizontalLayout class="sapUiContentPadding">-->
+								<!--	<m:Label text="Purchasing Info Record Report"/>-->
+								<!--</l:HorizontalLayout>-->
+								<m:Button xmlns="sap.m" text="Stat. Delv. Date" id="button4" press="onStat" icon="sap-icon://chain-link"/>
+								<m:Button xmlns="sap.m" text="Download Excel" id="button1" press="onExportExcel" icon="sap-icon://download-from-cloud"/>
+							</m:items>
+						</m:FlexBox>
+						<table:Table id="infocond" selectionMode="None" visibleRowCount="10" ariaLabelledBy="title" enableGrouping="true" rows="{inforeport>/infopage}"
+			        				 enableBusyIndicator="true" alternateRowColors="true">
+			       	  <table:columns>
+			       	  <table:Column sortProperty="Supplier" filterProperty="Supplier" autoResizable="true" width="07rem">
+			       	  		<m:Label text="Fornitore"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>Supplier}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+						<table:Column sortProperty="Plant" filterProperty="Plant" autoResizable="true" width="07rem">
+			       	  		<m:Label text="Plant"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>Plant}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+						<!--<table:Column sortProperty="PurchasingOrganization" filterProperty="PurchasingOrganization" autoResizable="true" width="03rem">-->
+			   <!--    	  		<m:Label text="P.Org"/>-->
+			   <!--    	  		 <table:template>-->
+						<!--		<m:Text text="{inforeport>PurchasingOrganization}" wrapping="false"/>-->
+						<!--	</table:template>-->
+						<!--</table:Column>	-->
+						<table:Column sortProperty="PurchaseOrder" filterProperty="PurchaseOrder" autoResizable="true" width="07rem">
+			       	  		<m:Label text="OrdineDAcquisto"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>PurchaseOrder}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+						<table:Column sortProperty="PurchaseOrderItem" filterProperty="PurchaseOrderItem" autoResizable="true" width="04rem">
+			       	  		<m:Label text="Pos"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>PurchaseOrderItem}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+						<table:Column sortProperty="Material" filterProperty="Material" autoResizable="true" width="09rem">
+			       	  		<m:Label text="Codice"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>Material}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+						<table:Column sortProperty="ProductDescription" filterProperty="ProductDescription" autoResizable="true" width="11rem">
+			       	  		<m:Label text="Descrizione della parte"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>ProductDescription}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+			<table:Column sortProperty="ScheduleLineDeliveryDate" filterProperty="ScheduleLineDeliveryDate" autoResizable="true" width="07rem">
+			       	  		<m:Label text="DataDiConsegna"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>ScheduleLineDeliveryDate}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+						<table:Column sortProperty="StatisticalDeliveryDate" filterProperty="StatisticalDeliveryDate" autoResizable="true" width="07rem">
+			       	  		<m:Label text="Data di consegna statistica"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>StatisticalDeliveryDate}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+							<table:Column sortProperty="OrderQuantity" filterProperty="OrderQuantity" autoResizable="true" width="06rem">
+			       	  		<m:Label text="QuantitàOrdine"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>OrderQuantity}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+						<table:Column sortProperty="PurchaseOrderQuantityUnit" filterProperty="PurchaseOrderQuantityUnit" autoResizable="true" width="03rem">
+			       	  		<m:Label text="Udm"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>PurchaseOrderQuantityUnit}" wrapping="false"/>
+							</table:template>
+						</table:Column>
+				       <table:Column sortProperty="PendingQuantity" filterProperty="PendingQuantity" autoResizable="true" width="06rem">
+			       	  		<m:Label text="Quantita in sospeso"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>PendingQuantity}" wrapping="false"/>
+							</table:template>
+						</table:Column>				
+						<table:Column sortProperty="RoughGoodsReceiptQty" filterProperty="RoughGoodsReceiptQty" autoResizable="true" width="06rem">
+			       	  		<m:Label text="Quantita GR"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>RoughGoodsReceiptQty}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+			<table:Column sortProperty="PurchaseOrderScheduleLine" filterProperty="PurchaseOrderScheduleLine" autoResizable="true" width="05rem">
+			       	  		<m:Label text="PurchaseOrderScheduleLine"/>
+			       	  		 <table:template>
+								<m:Text text="{inforeport>PurchaseOrderScheduleLine}" wrapping="false"/>
+							</table:template>
+						</table:Column>	
+						</table:columns>
+						</table:Table>
+					</m:content>
+				</m:Page>
+			</m:pages>
+		</m:App>
+</mvc:View>
