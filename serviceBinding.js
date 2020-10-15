@@ -1,0 +1,1 @@
+function initModel(){var a="/S4HC/sap/opu/odata/sap/API_PURCHASEORDER_PROCESS_SRV/";var e=new sap.ui.model.odata.ODataModel(a,true);sap.ui.getCore().setModel(e)}
