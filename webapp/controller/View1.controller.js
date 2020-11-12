@@ -1,8 +1,9 @@
 sap.ui.define(["sap/m/MessageToast", "sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter", "sap/ui/model/FilterOperator", "sap/ui/model/FilterType", "sap/ui/model/Sorter",
 	"sap/ui/core/util/Export", "sap/ui/core/util/ExportTypeCSV", "sap/m/MessageBox", "sap/ui/core/util/MockServer",
-	"sap/ui/export/Spreadsheet", "sap/ui/model/odata/v2/ODataModel", "sap/ui/model/json/JSONModel"
-], function (a, t, e, l, r, i, o, n, s, v, P, M, JS) {
+	"sap/ui/export/Spreadsheet", "sap/ui/model/odata/v2/ODataModel", "sap/ui/model/json/JSONModel",	"sap/ui/export/Spreadsheet",
+	"sap/m/MessageToast"
+], function (a, t, e, l, r, i, o, n, s, v, P, M, JS, Spreadsheet, MessageToast) {
 	"use strict";
 	var global_tab1;
 	var global_tab2;
@@ -107,6 +108,7 @@ sap.ui.define(["sap/m/MessageToast", "sap/ui/core/mvc/Controller",
 								}
 									global_tab2 = r.infopage;
 							u3.setData(r);
+							$.sap.xampp = r;
 							this.getView().setModel(u3, "inforeport");
 							var localJSON = new JS();
 							localJSON.setData(r);
@@ -301,6 +303,7 @@ sap.ui.define(["sap/m/MessageToast", "sap/ui/core/mvc/Controller",
 						}
 			       	  )
 				           u31.setData(r);
+				           $.sap.xampp = r;
 							this.getView().setModel(u31, "inforeport");
 							var localJSON = new JS();
 							localJSON.setData(r);
@@ -315,17 +318,17 @@ sap.ui.define(["sap/m/MessageToast", "sap/ui/core/mvc/Controller",
 		}, 
 		
 		
-		onExportExcel: function (a) {
-			jQuery.sap.require("sap.ui.core.util.Export");
-			jQuery.sap.require("sap.ui.core.util.ExportTypeCSV");
-			var a = this.byId("infocond");
-			debugger; 
-			a.exportData({
-				exportType: new sap.ui.core.util.ExportTypeCSV
-			}).saveFile().always(function () {
-				this.destroy()
-			})
-		},
+		// onExportExcel: function (a) {
+		// 	jQuery.sap.require("sap.ui.core.util.Export");
+		// 	jQuery.sap.require("sap.ui.core.util.ExportTypeCSV");
+		// 	var a = this.byId("infocond");
+		// 	// debugger; 
+		// 	a.exportData({
+		// 		exportType: new sap.ui.core.util.ExportTypeCSV
+		// 	}).saveFile().always(function () {
+		// 		this.destroy()
+		// 	})
+		// },
 		onExcel: sap.m.Table.prototype.exportData || function (a) {
 			a.saveFile().catch(function (a) {}).then(function () {
 				a.destroy()
@@ -335,7 +338,74 @@ sap.ui.define(["sap/m/MessageToast", "sap/ui/core/mvc/Controller",
 		onBeforeExport: function (a) {
 			var t = a.getParameter("exportSettings");
 			t.worker = false
+		},
+		onExportExcel:function(){
+				var aCols, aProducts, oSettings, oSheet;
+
+			aCols = this.createColumnConfig();
+			aProducts = $.sap.xampp.infopage;
+			var a = new Date();
+			oSettings = {
+				workbook: {
+					columns: aCols
+
+				},
+				dataSource: aProducts,
+				showProgress: false,
+				fileName: "PO Schedule Line Details_" + a.getUTCDate() + "-" + (a.getUTCMonth() + 1) + "-" + a.getUTCFullYear()
+			};
+
+			oSheet = new Spreadsheet(oSettings);
+			oSheet.build()
+				.then(function () {
+					MessageToast.show("Excel export has finished");
+				})
+				.finally(function () {
+					oSheet.destroy();
+				});
+		},
+			createColumnConfig: function () {
+			return [{
+				label: "Fornitore",
+				property: "Supplier"
+			}, {
+				label: "Plant",
+				property: "Plant"
+			}, {
+				label: "OrdineDAcquisto",
+				property: "PurchaseOrder"
+			}, {
+				label: "Pos",
+				property: "PurchaseOrderItem"
+			}, {
+				label: "Codice",
+				property: "Material"
+			}, {
+				label: "Descrizione della parte",
+				property: "ProductDescription"
+			}, {
+				label: "DataDiConsegna",
+				property: "ScheduleLineDeliveryDate"
+			}, {
+				label: "Data di consegna statistica",
+				property: "StatisticalDeliveryDate"
+			}, {
+				label: "QuantitàOrdine",
+				property: "OrderQuantity"
+			}, {
+				label: "Udm",
+				property: "PurchaseOrderQuantityUnit"
+			}, {
+				label: "Quantita in sospeso",
+				property: "PendingQuantity"
+			}, {
+				label: "Quantita GR",
+				property: "RoughGoodsReceiptQty"
+			},{
+				label: "Purchase Order Schedule Line",
+				property: "PurchaseOrderScheduleLine"
+			}];
 		}
 		
-})
+});
 });
